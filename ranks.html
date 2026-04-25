@@ -130,6 +130,83 @@ function togglePerks(id) {
   perks.classList.toggle("show");
 }
 </script>
+<script>
+let clickCount = 0;
+let awakened = false;
 
+function deadliestClick() {
+  clickCount++;
+
+  if (clickCount === 10 && !awakened) {
+    activateZaltaMode();
+    awakened = true;
+  }
+
+  if (clickCount === 20) {
+    finalForm();
+  }
+}
+
+function activateZaltaMode() {
+  document.body.style.background = "black";
+
+  document.querySelectorAll('.item').forEach(el => {
+    el.style.background = "rgba(255, 0, 0, 0.2)";
+    el.style.border = "1px solid red";
+    el.style.boxShadow = "0 0 20px red";
+  });
+
+  document.querySelector('nav').style.background =
+    "linear-gradient(90deg, #300000, #ff0000)";
+
+  const msg = document.createElement("h2");
+  msg.innerText = "💀 ZALTA AWAKENED 💀";
+  msg.style.textAlign = "center";
+  msg.style.color = "red";
+
+  document.body.prepend(msg);
+}
+
+function finalForm() {
+  // BLACK FLASH
+  const flash = document.createElement("div");
+  flash.style.position = "fixed";
+  flash.style.top = 0;
+  flash.style.left = 0;
+  flash.style.width = "100%";
+  flash.style.height = "100%";
+  flash.style.background = "black";
+  flash.style.zIndex = "9999";
+
+  document.body.appendChild(flash);
+
+  setTimeout(() => {
+    flash.remove();
+
+    // DISABLE OTHER RANKS
+    document.querySelectorAll('.item').forEach(el => {
+      el.style.pointerEvents = "none";
+      el.style.opacity = "0.3";
+    });
+
+    // CREATE SECRET RANK
+    const secret = document.createElement("div");
+    secret.className = "item";
+    secret.style.background = "black";
+    secret.style.border = "2px solid red";
+    secret.style.boxShadow = "0 0 40px red";
+
+    secret.innerHTML = 
+      <h3 style="color:red;">👑 ZALTA RANK - UNSEALED</h3>
+      <p>Infinite power granted</p>
+      <button>Claim</button>
+    ;
+
+    document.querySelector(".shop").prepend(secret);
+
+  }, 600);
+}
+</script>
+  
 </body>
 </html>
