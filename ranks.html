@@ -1,198 +1,131 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Ranks</title>
   <link rel="stylesheet" href="style.css">
 
   <style>
-    .perks {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: 0.3s;
-    }
-
-    .perks.show {
-      max-height: 200px;
-      opacity: 1;
-    }
+    body { background:#111; color:white; font-family:Arial; }
 
     .item {
-      cursor: pointer;
       margin: 10px;
       padding: 15px;
       background: #222;
       border-radius: 10px;
-      color: white;
     }
 
-    .locked {
-      background: gray;
+    button {
+      padding: 8px;
+      margin-top: 10px;
       cursor: pointer;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 6px;
     }
 
     #rewardScreen {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:black;
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
     }
 
     #rewardScreen img {
-      max-width: 90%;
-      max-height: 90%;
-      border: 3px solid red;
-      box-shadow: 0 0 40px red;
+      max-width:90%;
+      max-height:90%;
+      border:3px solid red;
     }
   </style>
 </head>
 
 <body>
 
-<nav>
-  <h1>⚡ TenterMC</h1>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="ranks.html">Ranks</a>
-    <a href="kits.html">Kits</a>
-    <a href="coins.html">Money</a>
-  </div>
-</nav>
+<h1>⚡ TenterMC Ranks</h1>
 
-<div class="shop">
-
-  <div class="item" onclick="togglePerks('ghoul')">
-    <h3>🧟 Ghoul - ₹99</h3>
-    <div id="ghoul" class="perks">
-      <p>✔ Basic perks<br>✔ 1.5x money</p>
-      <button>Buy</button>
-    </div>
-  </div>
-
-  <div class="item" onclick="togglePerks('chad')">
-    <h3>💪 Chad - ₹180</h3>
-    <div id="chad" class="perks">
-      <p>✔ 2x money<br>✔ Extra homes</p>
-      <button>Buy</button>
-    </div>
-  </div>
-
-  <div class="item" onclick="togglePerks('blaze')">
-    <h3>🔥 Blaze - ₹299</h3>
-    <div id="blaze" class="perks">
-      <p>✔ Special kit<br>✔ /chest</p>
-      <button>Buy</button>
-    </div>
-  </div>
-
-  <div class="item" onclick="togglePerks('piro')">
-    <h3>⚡ PIRO - ₹399</h3>
-    <div id="piro" class="perks">
-      <p>✔ 5x money<br>✔ All perks</p>
-      <button>Buy</button>
-    </div>
-  </div>
-
-  <!-- DEADLIEST -->
-  <div class="item">
-    <h3>💀 DEADLIEST - Unobtainable</h3>
-    <button class="locked" id="deadliestBtn">Unavailable</button>
-  </div>
-
+<div class="item">
+  <h3>🧟 Ghoul - ₹99</h3>
+  <button onclick="goCheckout('Ghoul Rank')">Buy</button>
 </div>
 
-<!-- 🖼️ IMAGE OVERLAY -->
+<div class="item">
+  <h3>💪 Chad - ₹180</h3>
+  <button onclick="goCheckout('Chad Rank')">Buy</button>
+</div>
+
+<div class="item">
+  <h3>🔥 Blaze - ₹299</h3>
+  <button onclick="goCheckout('Blaze Rank')">Buy</button>
+</div>
+
+<div class="item">
+  <h3>⚡ PIRO - ₹399</h3>
+  <button onclick="goCheckout('PIRO Rank')">Buy</button>
+</div>
+
+<!-- DEADLIEST -->
+<div class="item">
+  <h3>💀 DEADLIEST - Unobtainable</h3>
+  <button id="deadliestBtn">Unavailable</button>
+</div>
+
+<!-- IMAGE OVERLAY -->
 <div id="rewardScreen">
   <img src="./rage_bait.png">
 </div>
 
 <script>
 
-// 🔹 PERKS
-function togglePerks(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.toggle("show");
+// 🔹 CHECKOUT
+function goCheckout(item) {
+  window.location.href = "checkout.html?item=" + encodeURIComponent(item);
 }
 
-// 🔹 EASTER EGG SYSTEM
-let clickCount = 0;
+// 🔹 EASTER EGG
+let clicks = 0;
 const btn = document.getElementById("deadliestBtn");
 
 btn.addEventListener("click", () => {
-  clickCount++;
+  clicks++;
 
-  if (clickCount === 10) {
-    activateZaltaMode();
+  if (clicks === 10) {
+    document.body.style.background = "black";
+    document.querySelectorAll('.item').forEach(el => {
+      el.style.background = "rgba(255,0,0,0.2)";
+      el.style.border = "1px solid red";
+    });
   }
 
-  if (clickCount === 20) {
-    finalForm();
+  if (clicks === 20) {
+    unlockZalta();
   }
 });
 
-// 🔴 PHASE 1
-function activateZaltaMode() {
-  document.body.style.background = "black";
+function unlockZalta() {
 
   document.querySelectorAll('.item').forEach(el => {
-    el.style.background = "rgba(255,0,0,0.2)";
-    el.style.border = "1px solid red";
-    el.style.boxShadow = "0 0 20px red";
+    el.style.pointerEvents = "none";
+    el.style.opacity = "0.3";
   });
 
-  document.querySelector('nav').style.background =
-    "linear-gradient(90deg, #300000, red)";
+  const secret = document.createElement("div");
+  secret.className = "item";
+
+  secret.innerHTML = `
+    <h3 style="color:red;">👑 ZALTA RANK</h3>
+    <button onclick="claimZalta()">Claim</button>
+  `;
+
+  document.body.prepend(secret);
 }
 
-// 🌑 PHASE 2
-function finalForm() {
-
-  // black flash
-  const flash = document.createElement("div");
-  flash.style.position = "fixed";
-  flash.style.top = 0;
-  flash.style.left = 0;
-  flash.style.width = "100%";
-  flash.style.height = "100%";
-  flash.style.background = "black";
-  flash.style.zIndex = "9999";
-
-  document.body.appendChild(flash);
-
-  setTimeout(() => {
-    flash.remove();
-
-    // disable all
-    document.querySelectorAll('.item').forEach(el => {
-      el.style.pointerEvents = "none";
-      el.style.opacity = "0.3";
-    });
-
-    // secret rank
-    const secret = document.createElement("div");
-    secret.className = "item";
-    secret.style.background = "black";
-    secret.style.border = "2px solid red";
-    secret.style.boxShadow = "0 0 40px red";
-
-    secret.innerHTML = `
-      <h3 style="color:red;">👑 ZALTA RANK - UNSEALED</h3>
-      <p>Infinite power granted</p>
-      <button onclick="claimZalta()">Claim</button>
-    `;
-
-    document.querySelector(".shop").prepend(secret);
-
-  }, 600);
-}
-
-// 🖼️ CLAIM FUNCTION
+// 🖼️ CLAIM
 function claimZalta() {
   const screen = document.getElementById("rewardScreen");
   screen.style.display = "flex";
