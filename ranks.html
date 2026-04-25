@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ranks</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .perks {
+      max-height: 0;
+      overflow: hidden;
+      transition: 0.4s ease;
+      opacity: 0;
+    }
+
+    .perks.show {
+      max-height: 250px;
+      opacity: 1;
+      margin-top: 10px;
+    }
+
+    .item {
+      cursor: pointer;
+    }
+
+    ul {
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    .unobtainable {
+      opacity: 0.6;
+    }
+
+    .locked {
+      background: gray;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <h1>⚡ TenterMC</h1>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="ranks.html">Ranks</a>
+    <a href="crates.html">Crates</a>
+    <a href="money.html">Money</a>
+  </div>
+</nav>
+
+<div class="shop">
+
+  <!-- Ghoul -->
+  <div class="item" onclick="togglePerks('ghoul')">
+    <h3>🧟 Ghoul Rank - ₹99</h3>
+
+    <div id="ghoul" class="perks">
+      <ul>
+        <li>✔ Basic perks</li>
+        <li>✔ 1.5x coins</li>
+        <li>✔ Ghoul tag</li>
+      </ul>
+      <button>Buy</button>
+    </div>
+  </div>
+
+  <!-- Chad -->
+  <div class="item" onclick="togglePerks('chad')">
+    <h3>💪 Chad Rank - ₹180</h3>
+
+    <div id="chad" class="perks">
+      <ul>
+        <li>✔ Everything in Ghoul</li>
+        <li>✔ 2x coins</li>
+        <li>✔ Extra homes</li>
+      </ul>
+      <button>Buy</button>
+    </div>
+  </div>
+
+  <!-- Blaze -->
+  <div class="item" onclick="togglePerks('blaze')">
+    <h3>🔥 Blaze Rank - ₹299</h3>
+
+    <div id="blaze" class="perks">
+      <ul>
+        <li>✔ blazekit</li>
+        <li>✔ extra homes</li>
+        <li>✔ /chest</li>
+      </ul>
+      <button>Buy</button>
+    </div>
+  </div>
+
+  <!-- PIRO -->
+  <div class="item" onclick="togglePerks('piro')">
+    <h3>⚡ PIRO Rank - ₹399</h3>
+
+    <div id="piro" class="perks">
+      <ul>
+        <li>✔ Everything in Blaze</li>
+        <li>✔ 5x coins</li>
+        <li>✔ Special abilities</li>
+      </ul>
+      <button>Buy</button>
+    </div>
+  </div>
+
+  <!-- DEADLIEST -->
+  <div class="item unobtainable" onclick="togglePerks('deadliest')">
+    <h3>💀 DEADLIEST - Unobtainable</h3>
+
+    <div id="deadliest" class="perks">
+      <ul>
+        <li>✔ Admin-level perks</li>
+        <li>✔ God powers</li>
+        <li>✔ Limited edition</li>
+      </ul>
+      <button class="locked">Unavailable</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function togglePerks(id) {
+  const perks = document.getElementById(id);
+  perks.classList.toggle("show");
+}
+</script>
+
+</body>
+</html>

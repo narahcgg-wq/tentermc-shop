@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: white;
+}
+
+/* NAVBAR */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  box-shadow: 0 0 20px rgba(37,99,235,0.6);
+}
+
+nav h1 {
+  font-size: 20px;
+}
+
+nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background: white;
+  transition: 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* HOME */
+.home {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.home h2 {
+  font-size: 38px;
+  background: linear-gradient(90deg, #60a5fa, #22d3ee);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* SHOP GRID */
+.shop {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* ITEM CARD */
+.item {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 12px;
+  transition: 0.3s;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 20px rgba(59,130,246,0.6);
+}
+
+button {
+  margin-top: 10px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border: none;
+  padding: 10px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
