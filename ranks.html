@@ -5,42 +5,69 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    body { background:#111; color:white; font-family:Arial; }
+    body {
+      background: #111;
+      color: white;
+      font-family: Arial;
+    }
 
     .item {
+      cursor: pointer;
       margin: 10px;
       padding: 15px;
       background: #222;
       border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .item:hover {
+      transform: scale(1.02);
+    }
+
+    .perks {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .perks.show {
+      max-height: 200px;
+      opacity: 1;
     }
 
     button {
       padding: 8px;
       margin-top: 10px;
-      cursor: pointer;
-      background: red;
-      color: white;
       border: none;
       border-radius: 6px;
+      background: red;
+      color: white;
+      cursor: pointer;
+    }
+
+    .locked {
+      background: gray;
     }
 
     #rewardScreen {
       display: none;
       position: fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background:black;
-      justify-content:center;
-      align-items:center;
-      z-index:9999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
     }
 
     #rewardScreen img {
-      max-width:90%;
-      max-height:90%;
-      border:3px solid red;
+      max-width: 90%;
+      max-height: 90%;
+      border: 3px solid red;
+      box-shadow: 0 0 40px red;
     }
   </style>
 </head>
@@ -49,30 +76,46 @@
 
 <h1>⚡ TenterMC Ranks</h1>
 
-<div class="item">
-  <h3>🧟 Ghoul - ₹99</h3>
-  <button onclick="goCheckout('Ghoul Rank')">Buy</button>
-</div>
+<div class="shop">
 
-<div class="item">
-  <h3>💪 Chad - ₹180</h3>
-  <button onclick="goCheckout('Chad Rank')">Buy</button>
-</div>
+  <div class="item" onclick="togglePerks('ghoul')">
+    <h3>🧟 Ghoul - ₹99</h3>
+    <div id="ghoul" class="perks">
+      <p>✔ Basic perks<br>✔ 1.5x money</p>
+      <button onclick="buyNow('Ghoul Rank')">Buy</button>
+    </div>
+  </div>
 
-<div class="item">
-  <h3>🔥 Blaze - ₹299</h3>
-  <button onclick="goCheckout('Blaze Rank')">Buy</button>
-</div>
+  <div class="item" onclick="togglePerks('chad')">
+    <h3>💪 Chad - ₹180</h3>
+    <div id="chad" class="perks">
+      <p>✔ 2x money<br>✔ Extra homes</p>
+      <button onclick="buyNow('Chad Rank')">Buy</button>
+    </div>
+  </div>
 
-<div class="item">
-  <h3>⚡ PIRO - ₹399</h3>
-  <button onclick="goCheckout('PIRO Rank')">Buy</button>
-</div>
+  <div class="item" onclick="togglePerks('blaze')">
+    <h3>🔥 Blaze - ₹299</h3>
+    <div id="blaze" class="perks">
+      <p>✔ Special kit<br>✔ /chest</p>
+      <button onclick="buyNow('Blaze Rank')">Buy</button>
+    </div>
+  </div>
 
-<!-- DEADLIEST -->
-<div class="item">
-  <h3>💀 DEADLIEST - Unobtainable</h3>
-  <button id="deadliestBtn">Unavailable</button>
+  <div class="item" onclick="togglePerks('piro')">
+    <h3>⚡ PIRO - ₹399</h3>
+    <div id="piro" class="perks">
+      <p>✔ 5x money<br>✔ All perks</p>
+      <button onclick="buyNow('PIRO Rank')">Buy</button>
+    </div>
+  </div>
+
+  <!-- DEADLIEST -->
+  <div class="item">
+    <h3>💀 DEADLIEST - Unobtainable</h3>
+    <button class="locked" id="deadliestBtn">Unavailable</button>
+  </div>
+
 </div>
 
 <!-- IMAGE OVERLAY -->
@@ -82,8 +125,14 @@
 
 <script>
 
-// 🔹 CHECKOUT
-function goCheckout(item) {
+// 🔹 PERKS TOGGLE
+function togglePerks(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle("show");
+}
+
+// 🔹 BUY → CHECKOUT
+function buyNow(item) {
   window.location.href = "checkout.html?item=" + encodeURIComponent(item);
 }
 
@@ -96,9 +145,11 @@ btn.addEventListener("click", () => {
 
   if (clicks === 10) {
     document.body.style.background = "black";
+
     document.querySelectorAll('.item').forEach(el => {
       el.style.background = "rgba(255,0,0,0.2)";
       el.style.border = "1px solid red";
+      el.style.boxShadow = "0 0 20px red";
     });
   }
 
@@ -116,13 +167,16 @@ function unlockZalta() {
 
   const secret = document.createElement("div");
   secret.className = "item";
+  secret.style.background = "black";
+  secret.style.border = "2px solid red";
+  secret.style.boxShadow = "0 0 40px red";
 
   secret.innerHTML = `
-    <h3 style="color:red;">👑 ZALTA RANK</h3>
+    <h3 style="color:red;">👑 ZALTA RANK - UNSEALED</h3>
     <button onclick="claimZalta()">Claim</button>
   `;
 
-  document.body.prepend(secret);
+  document.querySelector(".shop").prepend(secret);
 }
 
 // 🖼️ CLAIM
