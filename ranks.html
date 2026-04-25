@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
 <head>
   <title>Ranks</title>
@@ -8,32 +8,47 @@
     .perks {
       max-height: 0;
       overflow: hidden;
-      transition: 0.4s ease;
       opacity: 0;
+      transition: 0.3s;
     }
 
     .perks.show {
-      max-height: 250px;
+      max-height: 200px;
       opacity: 1;
-      margin-top: 10px;
     }
 
     .item {
       cursor: pointer;
-    }
-
-    ul {
-      text-align: left;
-      padding-left: 20px;
-    }
-
-    .unobtainable {
-      opacity: 0.6;
+      margin: 10px;
+      padding: 15px;
+      background: #222;
+      border-radius: 10px;
+      color: white;
     }
 
     .locked {
       background: gray;
-      cursor: not-allowed;
+      cursor: pointer;
+    }
+
+    #rewardScreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #rewardScreen img {
+      max-width: 90%;
+      max-height: 90%;
+      border: 3px solid red;
+      box-shadow: 0 0 40px red;
     }
   </style>
 </head>
@@ -45,130 +60,100 @@
   <div>
     <a href="index.html">Home</a>
     <a href="ranks.html">Ranks</a>
-    <a href="kits.html">kits</a>
-    <a href="money.html">Money</a>
+    <a href="kits.html">Kits</a>
+    <a href="coins.html">Money</a>
   </div>
 </nav>
 
 <div class="shop">
 
-  <!-- Ghoul -->
   <div class="item" onclick="togglePerks('ghoul')">
-    <h3>🧟 Ghoul Rank - ₹99</h3>
-
+    <h3>🧟 Ghoul - ₹99</h3>
     <div id="ghoul" class="perks">
-      <ul>
-        <li>✔ Basic perks</li>
-        <li>✔ 1.5x coins</li>
-        <li>✔ Ghoul tag</li>
-      </ul>
+      <p>✔ Basic perks<br>✔ 1.5x money</p>
       <button>Buy</button>
     </div>
   </div>
 
-  <!-- Chad -->
   <div class="item" onclick="togglePerks('chad')">
-    <h3>💪 Chad Rank - ₹180</h3>
-
+    <h3>💪 Chad - ₹180</h3>
     <div id="chad" class="perks">
-      <ul>
-        <li>✔ Everything in Ghoul</li>
-        <li>✔ 2x coins</li>
-        <li>✔ Extra homes</li>
-      </ul>
+      <p>✔ 2x money<br>✔ Extra homes</p>
       <button>Buy</button>
     </div>
   </div>
 
-  <!-- Blaze -->
   <div class="item" onclick="togglePerks('blaze')">
-    <h3>🔥 Blaze Rank - ₹299</h3>
-
+    <h3>🔥 Blaze - ₹299</h3>
     <div id="blaze" class="perks">
-      <ul>
-        <li>✔ blazekit</li>
-        <li>✔ extra homes</li>
-        <li>✔ /chest</li>
-      </ul>
+      <p>✔ Special kit<br>✔ /chest</p>
       <button>Buy</button>
     </div>
   </div>
 
-  <!-- PIRO -->
   <div class="item" onclick="togglePerks('piro')">
-    <h3>⚡ PIRO Rank - ₹399</h3>
-
+    <h3>⚡ PIRO - ₹399</h3>
     <div id="piro" class="perks">
-      <ul>
-        <li>✔ Everything in Blaze</li>
-        <li>✔ 5x coins</li>
-        <li>✔ Special abilities</li>
-      </ul>
+      <p>✔ 5x money<br>✔ All perks</p>
       <button>Buy</button>
     </div>
   </div>
 
   <!-- DEADLIEST -->
-  <div class="item unobtainable" onclick="togglePerks('deadliest')">
+  <div class="item">
     <h3>💀 DEADLIEST - Unobtainable</h3>
-
-    <div id="deadliest" class="perks">
-      <ul>
-        <li>✔ Admin-level perks</li>
-        <li>✔ God powers</li>
-        <li>✔ Limited edition</li>
-      </ul>
-      <button class="locked">Unavailable</button>
-    </div>
+    <button class="locked" id="deadliestBtn">Unavailable</button>
   </div>
 
 </div>
 
-<script>
-function togglePerks(id) {
-  const perks = document.getElementById(id);
-  perks.classList.toggle("show");
-}
-</script>
-<script>
-let clickCount = 0;
-let awakened = false;
+<!-- 🖼️ IMAGE OVERLAY -->
+<div id="rewardScreen">
+  <img src="./rage_bait.png">
+</div>
 
-function deadliestClick() {
+<script>
+
+// 🔹 PERKS
+function togglePerks(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle("show");
+}
+
+// 🔹 EASTER EGG SYSTEM
+let clickCount = 0;
+const btn = document.getElementById("deadliestBtn");
+
+btn.addEventListener("click", () => {
   clickCount++;
 
-  if (clickCount === 10 && !awakened) {
+  if (clickCount === 10) {
     activateZaltaMode();
-    awakened = true;
   }
 
   if (clickCount === 20) {
     finalForm();
   }
-}
+});
 
+// 🔴 PHASE 1
 function activateZaltaMode() {
   document.body.style.background = "black";
 
   document.querySelectorAll('.item').forEach(el => {
-    el.style.background = "rgba(255, 0, 0, 0.2)";
+    el.style.background = "rgba(255,0,0,0.2)";
     el.style.border = "1px solid red";
     el.style.boxShadow = "0 0 20px red";
   });
 
   document.querySelector('nav').style.background =
-    "linear-gradient(90deg, #300000, #ff0000)";
-
-  const msg = document.createElement("h2");
-  msg.innerText = "💀 ZALTA AWAKENED 💀";
-  msg.style.textAlign = "center";
-  msg.style.color = "red";
-
-  document.body.prepend(msg);
+    "linear-gradient(90deg, #300000, red)";
 }
 
+// 🌑 PHASE 2
 function finalForm() {
-  // BLACK FLASH
+
+  // black flash
   const flash = document.createElement("div");
   flash.style.position = "fixed";
   flash.style.top = 0;
@@ -183,30 +168,42 @@ function finalForm() {
   setTimeout(() => {
     flash.remove();
 
-    // DISABLE OTHER RANKS
+    // disable all
     document.querySelectorAll('.item').forEach(el => {
       el.style.pointerEvents = "none";
       el.style.opacity = "0.3";
     });
 
-    // CREATE SECRET RANK
+    // secret rank
     const secret = document.createElement("div");
     secret.className = "item";
     secret.style.background = "black";
     secret.style.border = "2px solid red";
     secret.style.boxShadow = "0 0 40px red";
 
-    secret.innerHTML = 
+    secret.innerHTML = `
       <h3 style="color:red;">👑 ZALTA RANK - UNSEALED</h3>
       <p>Infinite power granted</p>
-      <button>Claim</button>
-    ;
+      <button onclick="claimZalta()">Claim</button>
+    `;
 
     document.querySelector(".shop").prepend(secret);
 
   }, 600);
 }
+
+// 🖼️ CLAIM FUNCTION
+function claimZalta() {
+  const screen = document.getElementById("rewardScreen");
+  screen.style.display = "flex";
+
+  setTimeout(() => {
+    screen.style.display = "none";
+    window.location.href = "index.html";
+  }, 3000);
+}
+
 </script>
-  
+
 </body>
 </html>
