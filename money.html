@@ -12,18 +12,32 @@
   <div>
     <a href="index.html">Home</a>
     <a href="ranks.html">Ranks</a>
-    <a href="kits.html">kits</a>
+    <a href="kits.html">Crates</a>
     <a href="money.html">money</a>
   </div>
 </nav>
 
 <div class="shop">
+
   <div class="item">
     <h3>💰 10000 money</h3>
     <p>₹45</p>
-    <button>Buy</button>
+    <button onclick="buy('10K_MONEY')">Buy</button>
   </div>
+
+  <div class="item">
+    <h3>💰 100000 money</h3>
+    <p>₹120</p>
+    <button onclick="buy('100K_MONEY')">Buy</button>
+  </div>
+
 </div>
+
+<script>
+function buy(item){
+  window.location.href = "checkout.html?item=" + item;
+}
+</script>
 
 </body>
 </html>
