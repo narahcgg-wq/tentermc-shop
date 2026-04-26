@@ -8,10 +8,40 @@
       background: linear-gradient(135deg, #0a0f1f, #050816);
       color: white;
       font-family: Arial;
-      text-align: center;
+      margin: 0;
     }
 
-    h1 { color: #4da3ff; }
+    /* NAVBAR */
+    .nav {
+      background: #0d1630;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #007bff;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: bold;
+      color: #4da3ff;
+    }
+
+    .nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      color: #4da3ff;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4da3ff;
+      margin-top: 20px;
+    }
 
     .card {
       background: #111a33;
@@ -20,6 +50,7 @@
       padding: 15px;
       margin: 15px auto;
       width: 260px;
+      text-align: center;
       box-shadow: 0 0 15px rgba(0,123,255,0.3);
       transition: 0.3s;
     }
@@ -36,17 +67,22 @@
       border: none;
       color: white;
       border-radius: 6px;
-      font-weight: bold;
       cursor: pointer;
-    }
-
-    button:hover {
-      box-shadow: 0 0 10px #007bff;
     }
   </style>
 </head>
 
 <body>
+
+<div class="nav">
+  <div class="logo">TenterMC</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="Ranks.html">Ranks</a>
+    <a href="Kits.html">Kits</a>
+    <a href="Money.html">Money</a>
+  </div>
+</div>
 
 <h1>Kits</h1>
 
