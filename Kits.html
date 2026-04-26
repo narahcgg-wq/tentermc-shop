@@ -1,29 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Crates</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Kits</title>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0f1f, #050816);
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    h1 { color: #4da3ff; }
+
+    .card {
+      background: #111a33;
+      border: 1px solid #007bff;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 15px auto;
+      width: 260px;
+      box-shadow: 0 0 15px rgba(0,123,255,0.3);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      background: #007bff;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      box-shadow: 0 0 10px #007bff;
+    }
+  </style>
 </head>
 
 <body>
 
-<nav>
-  <h1>TenterMC</h1>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="ranks.html">Ranks</a>
-    <a href="kits.html">kits</a>
-    <a href="money.html">money</a>
-  </div>
-</nav>
+<h1>Kits</h1>
 
-<div class="shop">
-  <div class="item">
-    <h3>🎁 Epic Kit</h3>
-    <p>₹50</p>
-    <button>Buy</button>
-  </div>
+<div class="card">
+  ⚔️ PvP Kit
+  <button onclick="buy('PVP_KIT')">Buy</button>
 </div>
+
+<div class="card">
+  💎 OP Kit
+  <button onclick="buy('OP_KIT')">Buy</button>
+</div>
+
+<script>
+function buy(item){
+  window.location.href = "checkout.html?item=" + item;
+}
+</script>
 
 </body>
 </html>
