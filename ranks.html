@@ -6,22 +6,41 @@
 
   <style>
     body {
-      background: #111;
+      background: #0a0f1f;
       color: white;
       font-family: Arial;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
+      background: linear-gradient(90deg, #001f4d, #007bff);
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .shop {
+      padding: 20px;
     }
 
     .item {
       cursor: pointer;
       margin: 10px;
       padding: 15px;
-      background: #222;
+      background: #111a33;
       border-radius: 10px;
+      border: 1px solid #007bff;
       transition: 0.3s;
     }
 
     .item:hover {
-      transform: scale(1.02);
+      box-shadow: 0 0 15px #007bff;
     }
 
     .perks {
@@ -41,7 +60,7 @@
       margin-top: 10px;
       border: none;
       border-radius: 6px;
-      background: red;
+      background: #007bff;
       color: white;
       cursor: pointer;
     }
@@ -74,12 +93,20 @@
 
 <body>
 
-<h1>⚡ TenterMC Ranks</h1>
+<nav>
+  <h2>⚡ TenterMC</h2>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="ranks.html">Ranks</a>
+    <a href="kits.html">Kits</a>
+    <a href="money.html">Money</a>
+  </div>
+</nav>
 
 <div class="shop">
 
   <div class="item" onclick="togglePerks('ghoul')">
-    <h3>🧟 Ghoul - ₹99</h3>
+    <h3>Ghoul Rank - ₹99</h3>
     <div id="ghoul" class="perks">
       <p>✔ Basic perks<br>✔ 1.5x money</p>
       <button onclick="buyNow('Ghoul Rank')">Buy</button>
@@ -87,7 +114,7 @@
   </div>
 
   <div class="item" onclick="togglePerks('chad')">
-    <h3>💪 Chad - ₹180</h3>
+    <h3>Chad Rank - ₹180</h3>
     <div id="chad" class="perks">
       <p>✔ 2x money<br>✔ Extra homes</p>
       <button onclick="buyNow('Chad Rank')">Buy</button>
@@ -95,7 +122,7 @@
   </div>
 
   <div class="item" onclick="togglePerks('blaze')">
-    <h3>🔥 Blaze - ₹299</h3>
+    <h3>Blaze Rank - ₹299</h3>
     <div id="blaze" class="perks">
       <p>✔ Special kit<br>✔ /chest</p>
       <button onclick="buyNow('Blaze Rank')">Buy</button>
@@ -103,14 +130,13 @@
   </div>
 
   <div class="item" onclick="togglePerks('piro')">
-    <h3>⚡ PIRO - ₹399</h3>
+    <h3>PIRO Rank - ₹399</h3>
     <div id="piro" class="perks">
       <p>✔ 5x money<br>✔ All perks</p>
       <button onclick="buyNow('PIRO Rank')">Buy</button>
     </div>
   </div>
 
-  <!-- DEADLIEST -->
   <div class="item">
     <h3>💀 DEADLIEST - Unobtainable</h3>
     <button class="locked" id="deadliestBtn">Unavailable</button>
@@ -118,25 +144,24 @@
 
 </div>
 
-<!-- IMAGE OVERLAY -->
 <div id="rewardScreen">
   <img src="./rage_bait.png">
 </div>
 
 <script>
 
-// 🔹 PERKS TOGGLE
+// perks toggle
 function togglePerks(id) {
   const el = document.getElementById(id);
-  if (el) el.classList.toggle("show");
+  el.classList.toggle("show");
 }
 
-// 🔹 BUY → CHECKOUT
+// checkout
 function buyNow(item) {
   window.location.href = "checkout.html?item=" + encodeURIComponent(item);
 }
 
-// 🔹 EASTER EGG
+// easter egg
 let clicks = 0;
 const btn = document.getElementById("deadliestBtn");
 
@@ -145,9 +170,7 @@ btn.addEventListener("click", () => {
 
   if (clicks === 10) {
     document.body.style.background = "black";
-
     document.querySelectorAll('.item').forEach(el => {
-      el.style.background = "rgba(255,0,0,0.2)";
       el.style.border = "1px solid red";
       el.style.boxShadow = "0 0 20px red";
     });
@@ -159,7 +182,6 @@ btn.addEventListener("click", () => {
 });
 
 function unlockZalta() {
-
   document.querySelectorAll('.item').forEach(el => {
     el.style.pointerEvents = "none";
     el.style.opacity = "0.3";
@@ -167,19 +189,15 @@ function unlockZalta() {
 
   const secret = document.createElement("div");
   secret.className = "item";
-  secret.style.background = "black";
-  secret.style.border = "2px solid red";
-  secret.style.boxShadow = "0 0 40px red";
-
   secret.innerHTML = `
-    <h3 style="color:red;">👑 ZALTA RANK - UNSEALED</h3>
+    <h3 style="color:red;">👑 ZALTA RANK</h3>
     <button onclick="claimZalta()">Claim</button>
   `;
 
   document.querySelector(".shop").prepend(secret);
 }
 
-// 🖼️ CLAIM
+// claim
 function claimZalta() {
   const screen = document.getElementById("rewardScreen");
   screen.style.display = "flex";
