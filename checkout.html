@@ -2,270 +2,59 @@
 <html>
 <head>
   <title>Checkout</title>
-
-  <style>
-    body {
-      background: #0a0f1f;
-      color: white;
-      text-align: center;
-      font-family: Arial;
-    }
-
-    .box {
-      background: #111a33;
-      padding: 20px;
-      border-radius: 12px;
-      width: 320px;
-      margin: 40px auto;
-      border: 1px solid #007bff;
-    }
-
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-      width: 90%;
-    }
-
-    input {
-      background: #0a0f1f;
-      color: white;
-      border: 1px solid #007bff;
-    }
-
-    button {
-      background: #007bff;
-      color: white;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    img {
-      margin-top: 10px;
-      border-radius: 10px;
-      border: 2px solid #007bff;
-    }
-  </style>
+  <link rel="stylesheet" href="Style.css">
 </head>
 
 <body>
 
-<div class="box">
+<h2>Checkout</h2>
+<p id="itemName"></p>
 
-  <h2>Checkout</h2>
-  <p id="itemName"></p>
+<input type="text" id="username" placeholder="Minecraft Username"><br><br>
+<input type="text" id="discord" placeholder="Discord ID"><br><br>
 
-  <input type="text" id="username" placeholder="Minecraft Username">
-  <img id="skinPreview" width="100" style="display:none;">
-  <p id="nameStatus"></p>
+<button onclick="send()">Send Request</button>
 
-  <input type="text" id="discord" placeholder="Discord ID">
-
-  <button id="buyBtn" onclick="sendOrder()">Request via Discord</button>
-  <p id="status"></p>
-
-  <hr style="border-color:#007bff;">
-
-  <h3>UPI Payment</h3>
-  <img src="https://quickchart.io/qr?text=upi://pay?pa=9606635458@fam&pn=TenterMC&cu=INR" width="200">
-  <button id="upiBtn" onclick="paidUPI()">I Paid</button>
-
-</div>
+<p id="status"></p>
 
 <script>
 
-// ITEM
+const webhook = "https://discord.com/api/webhooks/1497646568990441654/zgeTf3Tp1s0b9L43-HK-CWfsodK3m9brU6VAleGxhgbjpzelxunzCQ6FX5GwZd-kXmY1";
+
+// get item
 const params = new URLSearchParams(window.location.search);
-const item = params.get("item") || "Item";
+const item = params.get("item") || "Unknown";
 document.getElementById("itemName").innerText = "Buying: " + item;
 
-// WEBHOOK
-const webhookURL = "https://discord.com/api/webhooks/1497646568990441654/zgeTf3Tp1s0b9L43-HK-CWfsodK3m9brU6VAleGxhgbjpzelxunzCQ6FX5GwZd-kXmY1";
+function send(){
 
-// PING
-const PING = "<@1483759569132982284>";
+  const user = document.getElementById("username").value;
+  const dc = document.getElementById("discord").value;
 
-// ELEMENTS
-const input = document.getElementById("username");
-const preview = document.getElementById("skinPreview");
-const statusText = document.getElementById("nameStatus");
-const buyBtn = document.getElementById("buyBtn");
-const upiBtn = document.getElementById("upiBtn");
-
-let usernameValid = false;
-let cooldown = false;
-
-// USERNAME + SKIN
-input.addEventListener("input", () => {
-
-  const user = input.value.trim();
-
-  if (user.length < 3) {
-    preview.style.display = "none";
-    statusText.innerText = "";
-    usernameValid = false;
+  if(!user || !dc){
+    document.getElementById("status").innerText = "Fill all fields";
     return;
   }
 
-  preview.src = "https://minotar.net/avatar/" + user + "/100";
-
-  preview.onload = () => {
-    preview.style.display = "block";
-    statusText.innerText = "✅ Username looks valid";
-    statusText.style.color = "lime";
-    usernameValid = true;
-  };
-
-  preview.onerror = () => {
-    preview.style.display = "none";
-    statusText.innerText = "❌ Invalid username";
-    statusText.style.color = "red";
-    usernameValid = false;
-  };
-
-});
-
-// COOLDOWN SYSTEM
-function startCooldown(status) {
-
-  let t = 5;
-  buyBtn.disabled = true;
-  upiBtn.disabled = true;
-
-  const timer = setInterval(() => {
-    status.innerText = "⏳ Cooldown: " + t + "s";
-    status.style.color = "yellow";
-    t--;
-
-    if (t < 0) {
-      clearInterval(timer);
-      cooldown = false;
-      buyBtn.disabled = false;
-      upiBtn.disabled = false;
-      status.innerText = "✅ Ready again";
-      status.style.color = "lime";
-    }
-  }, 1000);
-}
-
-// SEND ORDER
-function sendOrder() {
-
-  const user = input.value.trim();
-  const discord = document.getElementById("discord").value.trim();
-  const status = document.getElementById("status");
-
-  if (cooldown) return;
-
-  if (!user || !discord) {
-    status.innerText = "❌ Fill all fields";
-    status.style.color = "red";
-    return;
-  }
-
-  if (!usernameValid) {
-    status.innerText = "❌ Invalid username";
-    status.style.color = "red";
-    return;
-  }
-
-  cooldown = true;
-
-  fetch(webhookURL, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
+  fetch(webhook,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
     body: JSON.stringify({
-      content: PING,
+      content: "<@1483759569132982284>",
       embeds: [{
-        title: "🛒 Purchase Request",
-        color: 3447003,
-        description: "New customer order received!",
-        thumbnail: {
-          url: "https://minotar.net/avatar/" + user + "/100"
-        },
+        title: "New Order",
+        description: "User placed order",
         fields: [
-          {
-            name: "👤 User",
-            value: "Minecraft: *" + user + "\nDiscord: *" + discord + "**"
-          },
-          {
-            name: "📦 Item",
-            value: "*" + item + "*"
-          }
-        ],
-        footer: { text: "TenterMC Store" },
-        timestamp: new Date().toISOString()
+          {name:"Minecraft", value:user},
+          {name:"Discord", value:dc},
+          {name:"Item", value:item}
+        ]
       }]
     })
   });
 
-  // SUCCESS MESSAGE
-  status.innerText = "✅ Request sent! You will soon receive a DM by the owner";
-  status.style.color = "lime";
-
-  setTimeout(() => {
-    startCooldown(status);
-  }, 1500);
+  document.getElementById("status").innerText = "Request sent! You will soon receive a DM by the owner";
 }
-
-// UPI
-function paidUPI() {
-
-  const user = input.value.trim();
-  const discord = document.getElementById("discord").value.trim();
-  const status = document.getElementById("status");
-
-  if (cooldown) return;
-
-  if (!user || !discord) {
-    status.innerText = "❌ Fill all fields";
-    status.style.color = "red";
-    return;
-  }
-
-  cooldown = true;
-
-  fetch(webhookURL, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      content: PING,
-      embeds: [{
-        title: "💳 Payment Claimed",
-        color: 5763719,
-        description: "User says they paid via UPI.",
-        thumbnail: {
-          url: "https://minotar.net/avatar/" + user + "/100"
-        },
-        fields: [
-          {
-            name: "👤 User",
-            value: "Minecraft: *" + user + "\nDiscord: *" + discord + "**"
-          },
-          {
-            name: "📦 Item",
-            value: "*" + item + "*"
-          }
-        ],
-        footer: { text: "TenterMC Payments" },
-        timestamp: new Date().toISOString()
-      }]
-    })
-  });
-
-  status.innerText = "✅ Payment info sent! Owner will DM you soon";
-  status.style.color = "lime";
-
-  setTimeout(() => {
-    startCooldown(status);
-  }, 1500);
-}
-
 </script>
 
 </body>
