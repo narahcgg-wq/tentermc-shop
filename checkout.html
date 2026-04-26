@@ -2,20 +2,79 @@
 <html>
 <head>
   <title>Checkout</title>
-  <link rel="stylesheet" href="Style.css">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0f1f, #050816);
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    .box {
+      background: #111a33;
+      border: 1px solid #007bff;
+      border-radius: 15px;
+      width: 320px;
+      margin: 40px auto;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0,123,255,0.3);
+    }
+
+    input, button {
+      width: 90%;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    input {
+      background: #0a0f1f;
+      color: white;
+      border: 1px solid #007bff;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    img {
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
 <body>
 
-<h2>Checkout</h2>
-<p id="itemName"></p>
+<div class="box">
 
-<input type="text" id="username" placeholder="Minecraft Username"><br><br>
-<input type="text" id="discord" placeholder="Discord ID"><br><br>
+  <h2>Checkout</h2>
+  <p id="itemName"></p>
 
-<button onclick="send()">Send Request</button>
+  <input type="text" id="username" placeholder="Minecraft Username">
+  <input type="text" id="discord" placeholder="Discord ID">
 
-<p id="status"></p>
+  <button onclick="send()">Request via Discord</button>
+
+  <p id="status"></p>
+
+  <hr>
+
+  <h3>UPI Payment</h3>
+
+  <!-- 🔥 QR (auto generated) -->
+  <img src="https://quickchart.io/qr?text=upi://pay?pa=9606635458@fam&pn=TenterMC&cu=INR" width="200">
+
+  <p>UPI: <b>9606635458@fam</b></p>
+
+  <button onclick="paid()">I Paid</button>
+
+</div>
 
 <script>
 
@@ -32,7 +91,7 @@ function send(){
   const dc = document.getElementById("discord").value;
 
   if(!user || !dc){
-    document.getElementById("status").innerText = "Fill all fields";
+    document.getElementById("status").innerText = "❌ Fill all fields";
     return;
   }
 
@@ -42,8 +101,7 @@ function send(){
     body: JSON.stringify({
       content: "<@1483759569132982284>",
       embeds: [{
-        title: "New Order",
-        description: "User placed order",
+        title: "🛒 New Order",
         fields: [
           {name:"Minecraft", value:user},
           {name:"Discord", value:dc},
@@ -53,8 +111,42 @@ function send(){
     })
   });
 
-  document.getElementById("status").innerText = "Request sent! You will soon receive a DM by the owner";
+  document.getElementById("status").innerText =
+  "✅ Request sent! You will soon receive a DM by the owner";
 }
+
+// 💳 UPI BUTTON
+function paid(){
+
+  const user = document.getElementById("username").value;
+  const dc = document.getElementById("discord").value;
+
+  if(!user || !dc){
+    document.getElementById("status").innerText = "❌ Fill all fields";
+    return;
+  }
+
+  fetch(webhook,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      content: "<@1483759569132982284>",
+      embeds: [{
+        title: "💳 Payment Claimed",
+        description: "User says they paid via UPI",
+        fields: [
+          {name:"Minecraft", value:user},
+          {name:"Discord", value:dc},
+          {name:"Item", value:item}
+        ]
+      }]
+    })
+  });
+
+  document.getElementById("status").innerText =
+  "✅ Payment info sent! Owner will DM you soon";
+}
+
 </script>
 
 </body>
