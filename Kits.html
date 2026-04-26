@@ -2,15 +2,73 @@
 <html>
 <head>
   <title>Kits</title>
-  <link rel="stylesheet" href="Style.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #0b1220;
+      color: white;
+    }
+
+    /* NAVBAR */
+    .nav {
+      background: linear-gradient(to right,#3a8dff,#00c6ff);
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+    }
+
+    /* CARDS ROW */
+    .container {
+      display: flex;
+      gap: 20px;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      width: 220px;
+      height: 120px;
+      border: 1px solid #3aa0ff;
+      border-radius: 12px;
+      padding: 15px;
+      background: rgba(255,255,255,0.02);
+      box-shadow: 0 0 10px rgba(0,123,255,0.2);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px #3aa0ff;
+    }
+
+    button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 8px;
+      background: #3aa0ff;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+  </style>
 </head>
 
 <body>
 
-<!-- KEEP YOUR NAVBAR EXACTLY SAME -->
-<div class="navbar">
-  <div class="logo">TENTER SHOP</div>
-  <div class="links">
+<div class="nav">
+  <b>⚡ TenterMC</b>
+  <div>
     <a href="index.html">Home</a>
     <a href="Ranks.html">Ranks</a>
     <a href="Kits.html">Kits</a>
@@ -18,26 +76,21 @@
   </div>
 </div>
 
-<!-- KEEP YOUR CENTER TEXT -->
-<div style="text-align:center; margin-top:100px;">
-  <h1>Welcome to the Store</h1>
-  <p>Select a category above to start shopping</p>
-  <p>| Kits Section |</p>
-</div>
+<div class="container">
 
-<!-- ADD ITEMS BELOW (NO DESIGN CHANGE) -->
-<div style="margin-top:40px;">
-
-  <div style="background:#111a33; border:1px solid #007bff; border-radius:10px; padding:15px; width:250px; margin:15px auto;">
-    ⚔️ PvP Kit
-    <br><br>
+  <div class="card">
+    ⚔️ PvP Kit - ₹99
     <button onclick="buy('PVP_KIT')">Buy</button>
   </div>
 
-  <div style="background:#111a33; border:1px solid #007bff; border-radius:10px; padding:15px; width:250px; margin:15px auto;">
-    💎 OP Kit
-    <br><br>
+  <div class="card">
+    💎 OP Kit - ₹199
     <button onclick="buy('OP_KIT')">Buy</button>
+  </div>
+
+  <div class="card">
+    🔥 GOD Kit - ₹299
+    <button onclick="buy('GOD_KIT')">Buy</button>
   </div>
 
 </div>
